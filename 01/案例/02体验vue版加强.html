@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body >
+<div  id="app">
+    <span>姓名：{{ people.name }} 年龄：{{people.age}} 性别：{{people.sex}}</span>
+</div>
+<script src="vue.js"></script>
+<script>
+  var vm = new Vue({
+    el:'#app',
+    data:{
+      people:{
+        name:'小伟',
+        age:18,
+        sex:'男'
+      }
+    }
+  })
+</script>
+</body>
+</html>

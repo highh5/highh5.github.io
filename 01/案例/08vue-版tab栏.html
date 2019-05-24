@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        button.active{
+            background: yellow;}
+        ul{ list-style: none;
+           margin:0;}
+        li{ margin:0;
+            width: 100px;
+            height: 100px;
+            background: pink;
+            border: 1px solid #000;
+            display: none;}
+        li.active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button :class="{'active':index==sign}" @click="sign=index" v-for="(item,index) in btns">{{index}}按钮{{item}}</button>
+
+        <ul>
+            <li :class="{'active':index==sign}" v-for="(item,index) in lis">列表{{item}}</li>
+        </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                sign:0,
+                btns:[1,2,3,4],
+                lis:[1,2,3,4]
+            }
+
+        })
+    </script>
+
+</body>
+</html>

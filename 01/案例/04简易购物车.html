@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>商品信息	</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>运费</th>
+                        <th>金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="cart.png" alt=""></td>
+                        <td><input type="number" v-model="price"></td>
+                        <td><input type="number" v-model="num"></td>
+                        <td><input type="number" v-model="trans"></td>
+                        <td>¥ {{ price*num + (num*1>0?trans*1:0) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+           data:{
+               price:15,
+               num:1,
+               trans:5
+           }
+
+        })
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li v-for="(people,index) in peoples">{{ index }}------ {{ people }}</li>
+    </ul>
+    <p v-for="(value,key) in people">
+        {{key}}---{{value}}
+    </p>
+</div>
+<script src="vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      peoples: ['小李', '小张', '小秦'],
+      people: {
+        name: "小李",
+        age: 18,
+        sex: "男"
+      }
+    }
+  })
+</script>
+</body>
+</html>

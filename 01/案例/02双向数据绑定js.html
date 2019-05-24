@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <input type="text" id="input">
+    <span id="box"></span>
+</div>
+<script>
+  var oinput = document.getElementById('input')
+  var obox = document.getElementById('box');
+  oinput.oninput = function () {
+    obox.innerHTML = this.value;
+  }
+</script>
+
+</body>
+</html>
