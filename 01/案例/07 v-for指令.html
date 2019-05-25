@@ -9,8 +9,8 @@
     <ul>
         <li v-for="(people,index) in peoples">{{ index }}------ {{ people }}</li>
     </ul>
-    <p v-for="(value,key) in people">
-        {{key}}---{{value}}
+    <p v-for="(value,key,index) in people">
+        {{index}}--{{key}}---{{value}}
     </p>
 </div>
 <script src="vue.js"></script>

@@ -1,6 +1,12 @@
 # 认识Vuejs
 
+## 怎么学习
 
+学习能力强的同学查看官方文档就可以学的很好，不过会感觉比较枯燥。所以我在安排这门课程时候，着重也是考量大家学习的情况，最终选择以案例的形式进行学习知识点。
+
+当然，会有感觉，知识点比较碎。也正是因为这些碎点才让这门课更有意思。否则一直讲语法，我个人觉得同学们会睡着。
+
+如果想要更详细的东西，建议直接看官方文档。
 
 # 为什么学习Vuejs
 
@@ -413,6 +419,282 @@ methods:{
     this.status = !this.status;
 }
 ```
+
+# v-for指令
+
+## 用 v-for 把一个数组对应为一组元素
+
+我们用 `v-for` 指令根据一组数组的选项列表进行渲染。`v-for` 指令需要使用 `item in items` 形式的特殊语法，`items` 是源数据数组并且 `item` 是数组元素迭代的别名。
+
+如果希望使用索引值那么提供了`(item,index) in items`第一项为数组元素的别名，第二项为索引值，不可以交换位置
+
+```html
+<div id="app">
+    <ul>
+        <li v-for="(people,index) in peoples">{{ index }}------ {{ people }}</li>
+    </ul>
+</div>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      peoples: ['小李', '小张', '小秦'],
+    }
+  })
+</script>
+```
+
+## 一个对象的 v-for
+
+你也可以用 v-for 通过一个对象的属性来迭代。
+
+**value,key,index 第一个是对应的值，第二个是属性名称，第三个是索引。**
+
+注意这里面的渲染的结果并不一定会按照对象的属性先后显示。
+
+```
+<div id="app">
+    <p v-for="(value,key,index) in people">
+        {{key}}---{{value}}
+    </p>
+</div>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      people: {
+        name: "小李",
+        age: 18,
+        sex: "男"
+      }
+    }
+  })
+</script>
+```
+
+```
+0--name---小李
+1--age---18
+2--sex---男
+```
+
+# v-bind:class
+
+操作元素的类名或者内联样式，是一个常见的需求。可以结合表达式，进行字符串拼接即可，不过易出错。vue还提供我们可以通过v-bind处理class和style。可以是字符串，也可以是对象或者数组。
+
+对象的形式会用的较多。其它形式可以参见官网文档自行学习即可（经过多年的实践很少用）
+
+## vue-tab栏标签切换
+
+```html
+<style>
+    button.active{
+        background: yellow;}
+    ul{ list-style: none;
+        margin:0;}
+    li{ margin:0;
+        width: 100px;
+        height: 100px;
+        background: pink;
+        border: 1px solid #000;
+        display: none;}
+    li.active{
+        display: block;
+    }
+</style>
+<div id="app">
+    <button :class="{'active':index==sign}" @click="sign=index" v-for="(item,index) in btns">{{index}}按钮{{item}}</button>
+    <ul>
+        <li :class="{'active':index==sign}" v-for="(item,index) in lis">列表{{item}}</li>
+    </ul>
+</div>
+<script>
+     var vm = new Vue({
+         el:"#app",
+         data:{
+             sign:0,
+             btns:[1,2,3,4],
+             lis:[1,2,3,4]
+         }
+     })
+</script>
+```
+
+![](assets/00000000000000000000003.gif)
+
+
+
+## 简易版todolist
+
+> 用到了数组操作。数组追加push unshift  shift  pop   splice等。并且还用到了事件指令传参等功能。
+
+```html
+<div id="app" class="container">
+    <input type="text" class="form-control" v-model="user" @keyup.enter="getUser()">
+    <br>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-info" v-for="(item,index) in users">
+            {{item}}
+            <span class="close" @click="shan(index)">&times;</span>
+        </li>
+    </ul>
+    <button class="btn btn-success btn-block">共有{{users.length}}条数据</button>
+</div>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            users:[],
+            user:""
+        },
+        methods:{
+            getUser(){
+                if(this.user.trim()!==""){
+                    this.users.push(this.user);
+                }
+                this.user = "";
+            },
+            shan(index){
+                this.users.splice(index,1);
+            }
+        }
+    });
+</script>
+```
+
+![](assets/00000000000000000000004.gif)
+
+## vue-焦点图
+
+> 这里面用到了**`v-bind:style`**属性，通过这个案例我们也可以学到关于**`生命周期`**的一点知识。
+
+```html
+<style>
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+#app{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+ul{
+    width: 500%;
+    position: relative;
+    left: 0;
+    top: 0;
+    transition: 1s;
+}
+ul li{
+    width: 20%;
+    float: left;
+}
+ul li img{
+    width: 100%;
+}
+ol{
+    position: absolute;
+    left: 50%;
+    margin-left: -60px;
+    bottom: 20px;
+}
+ol li{
+    width: 14px;
+    height: 14px;
+    background: #ccc;
+    float: left;
+    margin: 0 5px;
+    cursor: pointer;
+}
+ol li.cur{
+    background:#f10180;
+}
+.btn{
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    top: 50%;
+    margin-top: -22px;
+}
+.prev{
+    left: 0;
+    background:url("images/btn_l.png");
+}
+.next{
+    right: 0;
+    background:url("images/btn_r.png");
+}
+</style>
+<div id="app" @mouseover="stop()" @mouseout="autoplay()">
+    <ul :style="{'width':width,'left':left}">
+        <li v-for="(item,index) in list" :style="{'width':liwidth}"><img :src="item" alt=""></li>
+    </ul>
+    <ol>
+        <li :class="{'cur':cur==index}" v-for="(item,index) in list" @click="change(index)"></li>
+    </ol>
+    <span class="btn prev" @click="less()"></span>
+    <span class="btn next" @click="add()"></span>
+</div>
+
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            cur:0,
+            list:["images/01.jpg","images/02.jpg","images/03.jpg","images/04.jpg","images/05.jpg","images/06.jpg"],
+            timer:null
+        },
+        computed:{
+            width:function(){
+                return this.list.length*100+"%";
+            },
+            liwidth:function(){
+                return 1/this.list.length*100+"%";
+            },
+            left:function(){
+                return -this.cur*100+"%"
+            }
+        },
+        methods:{
+
+            add:function(){
+                this.cur++;
+                //if(this.cur>this.list.length-1){this.cur=0}
+                //cur++，然后让新的cur等于加后的cur+个数/个数取余，其实刚好可以处理边界，省去判断
+                this.cur = (this.cur+this.list.length)%this.list.length;
+            },
+            less:function(){
+                this.cur--;
+                //if(this.cur<0){this.cur=this.list.length-1}
+                this.cur = (this.cur+this.list.length)%this.list.length;
+            },
+            change:function(index){
+                this.cur = index;
+            },
+            autoplay:function(){
+                var that = this;
+                this.timer = setInterval(function(){
+                    that.add();
+                },2000);
+
+            },
+            stop:function(){
+                clearInterval(this.timer);
+            }
+        },
+        mounted:function(){
+            this.autoplay();
+        }
+    });
+</script>
+```
+
+![](assets/00000000000000000000005.gif)
+
+
 
 # 事件修饰符
 

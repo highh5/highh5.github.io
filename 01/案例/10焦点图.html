@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        #app{
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        ul{
+            width: 500%;
+            position: relative;
+            left: 0;
+            top: 0;
+            transition: 1s;
+        }
+        ul li{
+            width: 20%;
+            float: left;
+        }
+        ul li img{
+            width: 100%;
+        }
+        ol{
+            position: absolute;
+            left: 50%;
+            margin-left: -60px;
+            bottom: 20px;
+        }
+        ol li{
+            width: 14px;
+            height: 14px;
+            background: #ccc;
+            float: left;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        ol li.cur{
+            background:#f10180;
+        }
+        .btn{
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            top: 50%;
+            margin-top: -22px;
+        }
+        .prev{
+            left: 0;
+            background:url("images/btn_l.png");
+        }
+        .next{
+            right: 0;
+            background:url("images/btn_r.png");
+        }
+    </style>
+</head>
+<body>
+
+<div id="app" @mouseover="stop()" @mouseout="autoplay()">
+    <ul :style="{'width':width,'left':left}">
+        <li v-for="(item,index) in list" :style="{'width':liwidth}"><img :src="item" alt=""></li>
+    </ul>
+    <ol>
+        <li :class="{'cur':cur==index}" v-for="(item,index) in list" @click="change(index)"></li>
+    </ol>
+    <span class="btn prev" @click="less()"></span>
+    <span class="btn next" @click="add()"></span>
+</div>
+
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            cur:0,
+            list:["images/01.jpg","images/02.jpg","images/03.jpg","images/04.jpg","images/05.jpg","images/06.jpg"],
+            timer:null
+        },
+        computed:{
+            width:function(){
+                return this.list.length*100+"%";
+            },
+            liwidth:function(){
+                return 1/this.list.length*100+"%";
+            },
+            left:function(){
+                return -this.cur*100+"%"
+            }
+        },
+        methods:{
+
+            add:function(){
+                this.cur++;
+                //if(this.cur>this.list.length-1){this.cur=0}
+                //cur++，然后让新的cur等于加后的cur+个数/个数取余，其实刚好可以处理边界，省去判断
+                this.cur = (this.cur+this.list.length)%this.list.length;
+            },
+            less:function(){
+                this.cur--;
+                //if(this.cur<0){this.cur=this.list.length-1}
+                this.cur = (this.cur+this.list.length)%this.list.length;
+            },
+            change:function(index){
+                this.cur = index;
+            },
+            autoplay:function(){
+                var that = this;
+                this.timer = setInterval(function(){
+                    that.add();
+                },2000);
+
+            },
+            stop:function(){
+                clearInterval(this.timer);
+            }
+        },
+        mounted:function(){
+            this.autoplay();
+        }
+    });
+</script>
+
+</body>
+</html>
