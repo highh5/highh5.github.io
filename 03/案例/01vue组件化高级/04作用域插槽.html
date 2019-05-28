@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--列表形式展示-->
+    <my-com>
+        <template  slot-scope="abc" slot="left">
+            {{abc}}
+            <ul>
+                <li v-for="(item,index) in abc.data">{{item}}</li>
+            </ul>
+        </template>
+    </my-com>
+    <!--水平展示-->
+    <my-com>
+        <template slot-scope="abc" slot="left">
+            <span v-for="item in abc.data">{{item}}&nbsp;&nbsp;&nbsp;</span>
+        </template>
+    </my-com>
+</div>
+<template id="myCom">
+    <div>
+        <slot :data="language" name="left"></slot>
+        <slot name="right"><div>123</div></slot>
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    Vue.component('my-com',{
+        template:'#myCom',
+        data(){
+            return {
+                language:['JavaScript', 'Python', 'Swift', 'Go', 'C++']
+            }
+        }
+    });
+    var vm = new Vue({
+        el:'#app',
+    });
+</script>
+</body>
+</html>

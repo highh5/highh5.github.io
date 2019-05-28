@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var obj = {
+        a:1,
+        b:2
+    };
+    Object.keys(obj).forEach(key=>{
+        jiechi(obj,key,obj[key]);
+    })
+
+    function jiechi(obj,key,value){
+        Object.defineProperty(obj,key,{
+            enumerable:true,//可以被for循环便利出来
+            configurable:true,//可以被删除，可以被修改 如果为 false , 那么不可以修改, 不可以删除.
+            get(){
+                //处理功能
+                return value+10;
+            },
+            set(newVal){
+                //处理功能
+                value = newVal;
+            }
+        })
+    }
+</script>
+</body>
+</html>

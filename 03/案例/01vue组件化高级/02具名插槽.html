@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <my-com></my-com>
+    <hr>
+    <my-com>
+        <span slot="center">叩丁狼</span>
+    </my-com>
+    <hr>
+    <my-com>
+        <span slot="left">返回</span>
+        <span slot="center">叩丁狼</span>
+        <span slot="left">菜单</span>
+    </my-com>
+</div>
+<template id="myCom">
+    <div>
+        <slot name="left">默认左侧</slot>
+        <slot name="center">默认中间</slot>
+        <slot name="right">默认右侧</slot>
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    Vue.component('my-com',{
+        template:'#myCom'
+    })
+    var vm = new Vue({
+        el:'#app'
+    })
+</script>
+</body>
+</html>

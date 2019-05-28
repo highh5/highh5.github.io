@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/todo_base.css">
+    <link rel="stylesheet" href="css/todo_index.css">
+</head>
+
+<body class="learn-bar">
+<section id="todoapp">
+    <header id="header">
+        <h1>todos</h1>
+        <input v-model.trim="myinput"  id="new-todo" placeholder="来添加一些大事件?" autofocus="autofocus" @keyup.enter="add()">
+    </header>
+    <section id="main">
+        <input id="toggle-all"  type="checkbox" v-model="toggle">
+        <label for="toggle-all">选中全部</label>
+        <ul id="todo-list">
+            <li :class="{completed:item.selected,editing:index==edit}"  v-for="(item,index) in curList" :key="item.title">
+                <div class="view">
+                    <input  type="checkbox" class="toggle" v-model.trim="item.selected">
+                    <label @dblclick="edit = index">{{item.title}}</label>
+                    <button class="destroy" @click="list.splice(index,1)"></button>
+                </div>
+                <input  class="edit"  v-focus="edit==index"   v-model.trim="item.title" @blur="edit = -1"    @keyup.enter="edit=-1"  >
+            </li>
+        </ul>
+    </section>
+    <footer id="footer" v-show="list.length"><span id="todo-count"><strong>{{left}}</strong>进行中</span>
+        <ul id="filters">
+            <li>
+                <a href="#/all" :class="{selected:sign=='all'}">全部</a>
+            </li>
+            <li>
+                <a href="#/activing" :class="{selected:sign=='activing'}" >进行中</a>
+            </li>
+            <li>
+                <a href="#/completed" :class="{selected:sign=='completed'}" >已完成</a>
+            </li>
+        </ul>
+        <button id="clear-completed" style="" v-show="list.length-left" @click="remove()" >删除完成</button>
+    </footer>
+</section>
+<script src="js/vue.js"></script>
+<script>
+    //定义三个函数
+    var filter = {
+        all(data){
+            return data;
+        },
+        activing(data){
+            return data.filter(function(item){
+                return item.selected == false;
+            })
+            //return data.filter(item=>item.selected==false);
+            // return data.filter((item,index) => {
+            //     console.log(index)
+            //    return  item.selected==false
+            // })
+        },
+        completed(data){
+            return data.filter(function(item){
+                return item.selected == true;
+            })
+        }
+    }
+
+
+
+    Vue.directive('focus',{
+        update(el,binding){
+            if (binding.value) {
+                //el就是原生的dom对象。binding指的就是指令里面传递的值v-focus="值"
+                el.focus()
+            }
+        }
+    })
+    var local = {
+        //获取本地存储数据
+        get(){
+            //JSON.parse 是为将存储的数据（字符串型） 转成对象 如果一开始没有数据默认就是一个空对象，所以要加上或[]
+            return JSON.parse(localStorage.getItem('VUE619')) || []
+        },
+        //设置本地存储数据
+        set(value){
+            localStorage.setItem('VUE619',JSON.stringify(value))
+        }
+    }
+
+    var vm = new Vue({
+        el: '#todoapp',
+        data: {
+            sign:'all',
+            edit: -1,
+            myinput: '',
+            list: local.get(),
+            curList:[]
+        },
+        computed:{
+            left(){
+                return filter.activing(this.list).length
+            },
+            toggle:{
+                get(){
+                    return this.left == 0;
+                },
+                set(val){
+                    this.list.forEach(function(item){
+                        item.selected  = val;
+                    })
+                }
+            }
+        },
+        watch: {
+            //浅观测 只能够看到第一级对象里面数据的变化
+            // list(){
+            //     local.set(this.list)
+            // }
+            list:{
+                handler(){
+                    local.set(this.list)
+                },
+                //深观测
+                deep: true
+            }
+        },
+        methods: {
+            remove(){
+                this.list =  filter.activing(this.list);
+                this.curList = this.list;
+            },
+            add(){
+                if (this.myinput == '' ) {
+                    return;
+                }
+                this.list.push({selected: false,title: this.myinput})
+                this.myinput = '';
+            },
+            change(sign){
+                this.sign = sign;
+                this.curList = filter[sign](this.list);
+            }
+        },
+        mounted(){
+            this.curList = this.list;
+        }
+    })
+    //VUE路由的简单写法。
+    window.onhashchange = function(){
+        var hash = location.hash.replace(/^#\//g,'')
+        vm.change(hash)
+    }
+
+</script>
+
+
+</body>
+
+</html>

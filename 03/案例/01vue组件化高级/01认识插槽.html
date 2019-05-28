@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <my-com></my-com>
+        <my-com>
+            <h2>这是替换插槽的标题</h2>
+            <p>这是替换插槽的段落</p>
+        </my-com>
+    </div>
+    <template id="myCom">
+        <div>
+            <slot>我是一个插槽中的默认内容</slot>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('my-com',{
+            template:'#myCom'
+        })
+        var vm = new Vue({
+            el:'#app'
+        })
+    </script>
+</body>
+</html>

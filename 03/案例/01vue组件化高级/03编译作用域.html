@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <my-com v-show="isShow"></my-com>
+</div>
+<template id="myCom">
+    <h2>可不可以显示出来?</h2>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    Vue.component('my-com',{
+        template:'#myCom',
+        data(){
+            return {
+                isShow:false
+            }
+        }
+    })
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            isShow:true
+        }
+    })
+</script>
+</body>
+</html>
