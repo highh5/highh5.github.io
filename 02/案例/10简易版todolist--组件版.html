@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .container{
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="box">
+    <!--非父子间通信-->
+    <form-control @paradd="increment"></form-control>
+    <ul class="list-group">
+        <list-item @parremove="remove" v-for="(item,index) in list" :key="item" :item="item" :index="index" ></list-item>
+    </ul>
+    <button class="btn btn-block btn-danger">总计：现在有{{ list.length }}条数据</button>
+</div>
+<script src="js/vue.js"></script>
+<script>
+  Vue.component('FormControl',{
+    data(){
+      return {
+        user:''
+      }
+    },
+    template:`<input type="text" v-model.trim="user" class="form-control" @keyup.enter="add()" >`,
+    methods:{
+      add(){
+        if(this.user==''){
+          alert('请你输入内容好吗')
+          return;
+        }
+        this.$emit('paradd',this.user);
+        this.user = '';
+      }
+    }
+  })
+  Vue.component('ListItem',{
+    props:['item','index'],
+    template:`<li class="list-group-item list-group-item-success">
+                    {{item}}
+                    <span class="close" @click="remove(index)">&times;</span>
+                </li>`,
+    methods:{
+      remove(index){
+        this.$emit('parremove',index)
+      }
+    }
+  })
+  var vm = new Vue({
+    el:"#box",
+    data:{
+      user:'',
+      list:[]
+    },
+    methods:{
+      increment(txt){
+        this.list.unshift(txt);
+      },
+      remove(index){
+        this.list.splice(index,1)
+      }
+    }
+  })
+</script>
+</body>
+</html>

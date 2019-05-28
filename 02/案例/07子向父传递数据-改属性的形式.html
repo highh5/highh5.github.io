@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>07子向父传递数据</title>
+    <style>
+        p{ width: 200px;height: 200px;background: pink;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <ym-btn :show="show"></ym-btn>
+        <p v-show="show"></p>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('ym-btn',{
+          props:['show'],
+          template:`<button @click="change">按钮{{show}}</button>`,
+          methods:{
+            change(){
+              this.show = false;
+            }
+          }
+        });
+        var vm = new Vue({
+          el:'#app',
+          data:{
+            show:true
+          }
+        })
+    </script>
+</body>
+</html>

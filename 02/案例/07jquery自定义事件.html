@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button>a</button>
+<div>盒子1</div>
+<div>盒子2</div>
+<div>盒子3</div>
+<script src="js/jquery.min.js"></script>
+<script>
+  $('button:eq(0)').click(function(){
+    $('div').trigger('gaibian')
+  })
+  $('div:eq(0)').on('gaibian',function () {
+    $(this).css({width:200, height:200, background:'pink'})
+  })
+  $('div:eq(1)').on('gaibian',function () {
+    $(this).css({width:200, height:200, background:'blue'})
+  })
+  $('div:eq(2)').on('gaibian',function () {
+    $(this).css({width:200, height:200, background:'gold'})
+  })
+
+
+
+</script>
+</body>
+</html>

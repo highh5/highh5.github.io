@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>03bootstrap警示框组件</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <div id="app" class="container" style="margin-top: 100px;">
+        <my-alert v-bind:msg="item" v-for="(item,index) in msgarr"></my-alert>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('my-alert',{
+          props:['msg'],
+          template:`<div class="alert alert-success" >{{msg}}</div>`
+        })
+        var vm = new Vue({
+          el:'#app',
+          data:{
+            msgarr:['支付成功','完成交易']
+          }
+        })
+    </script>
+</body>
+</html>

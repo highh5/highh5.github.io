@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>11父子组件双向数据绑定</title>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+        <childcom :msg="msg" :changemsg="changeMsg"></childcom>
+    </div>
+    <template id="childCom">
+        <div>
+            <input type="text" v-model="dmsg" >
+            <p>{{dmsg}}</p>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('childcom',{
+          props:['msg','changemsg'],
+          template:'#childCom',
+          data(){
+            return {}
+          },
+          computed:{
+            dmsg:{
+              get(){
+                return this.msg;
+              },
+              set(newval){
+                this.changemsg(newval)
+              }
+            }
+          }
+        })
+
+
+        var vm = new Vue({
+          el:"#app",
+          data:{
+            msg:'hihi'
+          },
+          methods:{
+            changeMsg(val){
+              this.msg = val;
+            }
+          }
+        })
+    </script>
+</body>
+</html>

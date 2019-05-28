@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01学习组件注册</title>
+</head>
+<body>
+    <div id="app">
+        <my-article></my-article>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.component('my-article',{
+          template:`<div>
+                       <h3>这是标题</h3>
+                       <p>段落</p>
+                    </div>`
+        })
+        var vm = new Vue({
+          el:"#app"
+        })
+    </script>
+</body>
+</html>

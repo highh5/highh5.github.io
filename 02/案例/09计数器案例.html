@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <h2>{{total}}</h2>
+    <child @increment="changeTotal" @decrement="changeTotal"></child>
+</div>
+<template id="childCom">
+    <div>
+        <button @click="increment">+1</button>
+        <button @click="decrement">-1</button>
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+  Vue.component('child', {
+    data() {
+      return {
+        num: 0
+      }
+    },
+    template: '#childCom',
+    methods: {
+      increment() {
+        this.num++;
+        this.$emit('increment', this.num)
+      },
+      decrement() {
+        this.num--;
+        this.$emit('decrement', this.num)
+      }
+    }
+  })
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      total: 0
+    },
+    methods: {
+      changeTotal(val) {
+        this.total = val;
+      }
+    }
+  })
+</script>
+</body>
+</html>
