@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <router-link to="/comp1">组件1</router-link>
+    <router-link to="/comp2">组件2</router-link>
+
+    <router-view></router-view>
+</div>
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+  var Comp1 = {template: '<div>组件1</div>' }
+  var Comp2 = {template:'<div>组件2</div>' }
+
+  var router = new VueRouter({
+    routes:[
+      {
+        path:'/',//path就是来定义网站的hash（路由）
+        redirect:'/comp1',//网站重定向
+      },
+      {
+        path:'/comp1',
+        component:Comp1, //如果路由匹配就会渲染当前指定的组件
+      },{
+        path:'/comp2',
+        component:Comp2
+      }
+    ]
+  })
+
+  var vm = new Vue({
+    // router:router
+    router
+  }).$mount('#app')
+
+</script>
+</body>
+</html>
