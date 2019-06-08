@@ -16,6 +16,9 @@
       console.log(res)
     }
   }
+  new Promise((resolve,reject)=>{
+
+  })
 </script>
 
 <style scoped lang="less">

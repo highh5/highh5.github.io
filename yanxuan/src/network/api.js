@@ -64,5 +64,4 @@ let api =  {
   FootprintList: 'footprint/list',  //足迹列表
   FootprintDelete: 'footprint/delete',  //删除足迹
 };
-console.log(api)
 export default api;

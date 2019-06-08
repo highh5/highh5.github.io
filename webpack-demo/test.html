@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+
+  function promisify(fn, delay = 1000) {
+    return new Promise((resolve, reject) => {
+      setTimeout(function () {
+        try {
+          resolve(fn());
+        } catch (e) {
+          reject(e);
+        }
+      }, delay)
+    })
+  }
+  promisify(() => {return {a:1,b:1}}).then(function (data) {
+    console.log(data)
+  })
+
+  /*async function getjson() {
+    let data = await promisify(() => {return {a:1,b:1}})
+    return data;
+  }
+  window.onload = async function () {
+    let res = await getjson()
+    console.log(res)
+  }*/
+  window.onload = async function () {
+    let res = await getjson()
+    console.log(res)
+  }
+
+</script>
+</body>
+</html>
