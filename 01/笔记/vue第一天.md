@@ -30,7 +30,7 @@
 
 ![1558692166376](assets/1558692166376.png)
 
-## 简单认识一下Vuejs
+## 简单认识一下Vuejs（认识）
 
 **Vue (读音 /vjuː/，类似于 view)，不要读错。**
 
@@ -416,7 +416,8 @@ data: {
 },
 methods:{
     toggle(){
-    this.status = !this.status;
+    	this.status = !this.status;
+	}
 }
 ```
 

@@ -336,7 +336,7 @@ body{
 
 请使用
 
-`npm install -D babel-loader@7.1.5 babel-core babel-plugin-transfrom-runtime babel-preset-env babel-perset-stage-0`
+`npm install -D babel-loader^7.1.5 babel-core  babel-plugin-transform-runtime  babel-preset-env babel-preset-stage-0`
 
 **注意babel-loader 默认安装的是8的版本。我们需要7即可。上面的官方推荐，是有问题的，后面我们就知道了。特别是对异步的处理是有缺陷的。请慎重**
 
@@ -388,6 +388,8 @@ console.log(p1)
 ### 插件plugins
 
 @babel/plugin-transform-runtime`把一些高级的JS代码进行编译成es5代码。如await/async（异步终级方案） 等
+
+ 多个模块之间导入不重复的问题
 
 ```js
 //下面这种我们现在先了解。
@@ -553,7 +555,7 @@ fn();
 
 ```json
 {
-  "presets": ["env"],
+  "presets": ["env","stage-0"],
   "plugins": ["transform-runtime"]
 }
 ```
@@ -743,7 +745,7 @@ new Vue({
 
 ![1559758111649](assets/1559758111649.png)
 
-```HTML
+```js
 module.exports = {
   // ...
   resolve: {

@@ -18,7 +18,7 @@
         <input id="toggle-all"  type="checkbox" v-model="toggle">
         <label for="toggle-all">选中全部</label>
         <ul id="todo-list">
-            <li :class="{completed:item.selected,editing:index==edit}"  v-for="(item,index) in curList" :key="item.title">
+            <li :class="{completed:item.selected,editing:index==edit}"  v-for="(item,index) in curList" :key="index">
                 <div class="view">
                     <input  type="checkbox" class="toggle" v-model.trim="item.selected">
                     <label @dblclick="edit = index">{{item.title}}</label>
@@ -141,17 +141,23 @@
             change(sign){
                 this.sign = sign;
                 this.curList = filter[sign](this.list);
+            },
+            hash(){
+                var hash = location.hash.split('#/')[1];
+                hash = hash||'all'
+                this.change(hash)
             }
         },
         mounted(){
-            this.curList = this.list;
+            // this.curList = this.list;
+            this.hash();
+            //VUE路由的简单写法。
+            window.onhashchange =()=>{
+                this.hash();
+            }
         }
     })
-    //VUE路由的简单写法。
-    window.onhashchange = function(){
-        var hash = location.hash.replace(/^#\//g,'')
-        vm.change(hash)
-    }
+
 
 </script>
 

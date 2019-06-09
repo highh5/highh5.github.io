@@ -2,7 +2,7 @@
   "name": "webpack-demo",
   "version": "1.0.0",
   "scripts": {
-    "start": "webpack-dev-server --open --port 3000 --hot"
+    "start": "webpack-dev-server --open --port 3002 --hot"
   },
   "dependencies": {
     "vue": "^2.6.10",
